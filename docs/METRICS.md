@@ -29,7 +29,7 @@ Canonical MIMIC eval size is the frontal test set (3398 scored when no responses
 Same NLG metrics, plus diagnosis micro P/R/F1 from the `Disease diagnosis:` span (not CheXbert).
 
 - `P/R/F1` = `diagnosis_precision_micro` / `diagnosis_recall_micro` / `diagnosis_f1_micro` in `metrics_clinic.json`
-- `n` in tables is clinic-valid samples; empty or unparseable 2B outputs are skipped
+- Dataset counts in paper Table 6 and `DATA_SPLITS.md` refer to split-list entries. If an evaluator skips empty or unparseable outputs, report its effective scored count separately; it does not replace the dataset size.
 - Script: MedEvalKit `utils/Metrics_Compute/cal_report_metrics_NeoCXR.py`
 - Entry: `scripts/sbatch_eval_mimic_model_on_neocxr_ev_l40.sh` (runs both NeoCXR and NeoCXR-EV; the wrapper sets `REPORT_METRICS_DATASETS` internally for each stage)
 
