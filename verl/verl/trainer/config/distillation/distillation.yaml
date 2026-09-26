@@ -1,0 +1,100 @@
+# On-policy distillation. Extra OPD fields default to off.
+_target_: verl.workers.config.DistillationConfig
+enabled: false
+n_gpus_per_node: 8
+nnodes: 0
+teacher_key: data_source
+distillation_loss:
+  _target_: verl.workers.config.DistillationLossConfig
+  loss_mode: k3
+  topk: 32
+  use_task_rewards: true
+  distillation_loss_coef: 1.0
+  loss_max_clamp: null
+  log_prob_min_clamp: null
+  use_policy_gradient: false
+  policy_loss_mode: vanilla
+  clip_ratio: 0.2
+  clip_ratio_low: 0.2
+  clip_ratio_high: 0.2
+  group_norm_coef: 0.0
+  group_norm_by_std: true
+  group_norm_size: 4
+  little_teacher_coef: 0.0
+  clinical_token_weight_coef: 0.0
+  clinical_token_weight_normalize: true
+  teacher_visual_token_enabled: false
+  teacher_visual_base_opd_coef: 1.0
+  teacher_visual_token_coef: 1.0
+  teacher_visual_token_top_fraction: 0.3
+  teacher_visual_token_gate: sigmoid
+  teacher_visual_sigmoid_tau: 0.5
+  teacher_visual_sigmoid_bias: 0.0
+  teacher_visual_token_normalize: true
+  teacher_visual_noise_std: 0.1
+  teacher_visual_gap_gate: none
+  teacher_visual_gap_gate_tau: 0.05
+  teacher_visual_gap_boost_coef: 0.5
+  gt_visual_sim_enabled: false
+  gt_visual_base_opd_coef: 1.0
+  gt_visual_sim_coef: 1.0
+  gt_visual_sim_top_fraction: 0.3
+  gt_visual_sim_normalize: true
+  chexpert_gap_base_opd_coef: 1.0
+  chexpert_gap_opd_coef: 0.0
+  chexpert_gap_normalize: true
+  chexpert_gap_group_size: 4
+  rougel_gap_base_opd_coef: 1.0
+  rougel_gap_opd_coef: 0.0
+  rougel_gap_normalize: true
+  rougel_gap_group_size: 4
+  rougel_gap_modulate_visual: false
+  rougel_gap_kl_coef: 0.0
+  rougel_gap_kl_mode: k3
+  rougel_gap_kl_zero_loops: true
+  rougel_gap_kl_vis_gate: false
+  teacher_token_kl_coef: 0.0
+  teacher_token_kl_mode: k3
+  teacher_token_kl_zero_loops: true
+  gap_dynamic_sampling: false
+  gap_dynamic_keep_k: 4
+  gt_sat_metric: none
+  gt_sat_base_opd_coef: 1.0
+  gt_sat_opd_coef: 0.0
+  gt_sat_normalize: true
+  gt_sat_group_size: 4
+  gt_sat_use_teacher_factor: false
+  visual_distill_enabled: false
+  visual_distill_coef: 0.0
+  visual_distill_loss: cosine
+  visual_teacher_path: null
+teacher_models:
+  teacher_model:
+    _target_: verl.workers.config.DistillationTeacherModelConfig
+    key: null
+    model_path: null
+    num_replicas: 0
+    inference:
+      _target_: verl.workers.config.RolloutConfig
+      name: ${oc.select:actor_rollout_ref.rollout.name}
+      dtype: ${oc.select:actor_rollout_ref.rollout.dtype}
+      gpu_memory_utilization: 0.5
+      enforce_eager: true
+      cudagraph_capture_sizes: null
+      free_cache_engine: true
+      data_parallel_size: 1
+      expert_parallel_size: 1
+      tensor_model_parallel_size: 2
+      max_num_batched_tokens: 8192
+      max_model_len: null
+      max_num_seqs: 1024
+      load_format: auto
+      engine_kwargs: {}
+      limit_images: null
+      enable_chunked_prefill: true
+      enable_prefix_caching: true
+      disable_log_stats: true
+      skip_tokenizer_init: false
+      prompt_length: ${oc.select:actor_rollout_ref.rollout.prompt_length}
+      response_length: ${oc.select:actor_rollout_ref.rollout.response_length}
+      temperature: ${oc.select:actor_rollout_ref.rollout.temperature}

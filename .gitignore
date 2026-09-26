@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+!verl/verl/_bytecode_backup/distillation_losses.pyc
+outputs/
+checkpoints/
+*.safetensors
+*.bin
+*.pt
+*.pth
+.DS_Store
