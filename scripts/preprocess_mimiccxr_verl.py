@@ -364,10 +364,8 @@ def main() -> None:
     p.add_argument(
         "--image_root",
         type=Path,
-        default=Path(
-            "/path/to/MedEvalKit/utils/MIMIC_CXR/MIMIC_CXR/"
-            "data/wcl/physionet.org/files/mimic-cxr-jpg/2.0.0"
-        ),
+        default=Path("/path/to/mimic-cxr-jpg/2.0.0"),
+        help="Local MIMIC-CXR-JPG root containing the files/ directory.",
     )
     p.add_argument("--output_dir", type=Path, default=Path("data/mimiccxr_verl_4k"))
     p.add_argument("--total_samples", type=int, default=4000)

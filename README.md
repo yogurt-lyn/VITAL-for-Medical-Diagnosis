@@ -209,6 +209,8 @@ The supplied manuscript is anonymous and under double-blind review at ICLR 2027.
 
 This implementation builds on the bundled [verl](verl/README.md) framework and Qwen3-VL models. Evaluation uses MedEvalKit, CheXbert and RaTEScore. We acknowledge the MIMIC-CXR, CheXpertPlus, NeoCXR and NeoCXR-EV datasets used in the paper. Upstream notices are retained in [`verl/Notice.txt`](verl/Notice.txt).
 
+Names, affiliations, and contact details in upstream package metadata, copyright notices, and citations identify third-party contributors; they do not identify the anonymous authors of VITAL.
+
 ## License
 
 The bundled `verl` framework carries an [Apache-2.0 license](verl/LICENSE). This checkout has no separate top-level license for the VITAL-specific additions or paper figures; the upstream license should not be interpreted as granting rights to every repository asset. Dataset and model terms remain those of their respective providers.
