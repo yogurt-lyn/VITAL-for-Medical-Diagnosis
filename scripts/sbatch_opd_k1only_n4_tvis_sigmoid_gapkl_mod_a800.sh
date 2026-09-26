@@ -15,7 +15,6 @@
 #SBATCH --mem=320G
 #SBATCH --gres=gpu:a800:4
 #SBATCH --time=48:00:00
-#SBATCH --exclude=gpu8004
 
 set -euo pipefail
 PROJECT_ROOT="${PROJECT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"

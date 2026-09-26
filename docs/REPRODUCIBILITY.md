@@ -8,12 +8,12 @@ Local filesystem defaults use anonymous `/path/to/…` placeholders. Replace the
 
 - **CPython 3.12:** the original README identifies this version for the compiled distillation loss. The loader in [`losses.py`](../verl/verl/trainer/distillation/losses.py) searches for `_bytecode_backup/distillation_losses.pyc`. That compiled file is included in the checked-in tree; use the matching CPython version. Installing upstream `verl` is not a substitute.
 - **GPU runtime:** compatible CUDA, PyTorch, vLLM and FSDP; package dependencies and optional extras are declared in [`setup.py`](../verl/setup.py). The repository does not provide a locked VITAL environment. `python -m pip install -e './verl[vllm]'` is a package installation step only.
-- **Conda:** `CONDA_SH` points to the activation script; `CONDA_NAME` defaults to `verl`.
+- **Conda:** explicitly set `CONDA_SH` to your activation script (for example, `/path/to/miniconda3/etc/profile.d/conda.sh`); `CONDA_NAME` defaults to `verl`.
 - **CuPy:** the base training wrapper requires `${CUPY_PREFIX}/cupy` to exist. Its default is `.deps/cupy-cuda12x-13.6.0`; this directory is not included. Supply a compatible local installation and set `CUPY_PREFIX`.
 - **Models:** merged Hugging Face directories for the 2B SFT student and 8B GSPO teacher. The paper describes cold-start SFT and teacher GSPO; this README does not claim a complete launch recipe for those stages.
 - **Data:** authorized image access, reference reports, training/validation parquets, and cached teacher ROUGE-L scores. The default VITAL wrapper checks for `train_grpo_teacher_rougel.parquet`. The cache and a dedicated cache-building entry point are not supplied.
-- **Default GPUs:** the top-level recipe sets 2 training + 1 rollout + 1 teacher GPU. Slurm directives assume an A800 partition and even exclude a named host; adapt those directives to your cluster. Plain `bash` uses the same script without scheduling resources.
-- **Other local paths:** inspect `PROMPTMRG_ROOT`, `PROMPTMRG_BERT_PATH`, CUDA library paths and any environment-specific defaults in the launchers before use.
+- **Default GPUs:** the top-level recipe sets 2 training + 1 rollout + 1 teacher GPU. Slurm directives assume an A800 partition; adapt them to your cluster. If needed, pass host exclusions with `sbatch --exclude=...` at submission time. Plain `bash` uses the same script without scheduling resources.
+- **Other local paths:** inspect `PROMPTMRG_ROOT`, `PROMPTMRG_BERT_PATH` and any environment-specific defaults in the launchers before use. Configure CUDA library directories through your environment's `LD_LIBRARY_PATH`; evaluation wrappers preserve it and prepend the metrics environment's library directory.
 
 The preprocessing CLI is [`scripts/preprocess_mimiccxr_verl.py`](../scripts/preprocess_mimiccxr_verl.py); its arguments include `--train_json`, `--val_json`, `--test_json`, `--output_dir`, `--total_samples`, `--sft_samples`, and `--seed`. It does not supply the missing teacher-score cache. See [data splits](DATA_SPLITS.md).
 

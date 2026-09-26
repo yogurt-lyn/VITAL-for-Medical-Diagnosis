@@ -20,7 +20,7 @@ unset ROCR_VISIBLE_DEVICES
 
 PROJECT_ROOT="${PROJECT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 MEDEVALKIT_ROOT="${MEDEVALKIT_ROOT:-/path/to/MedEvalKit}"
-CONDA_SH="${CONDA_SH:-/share/apps/miniconda3/etc/profile.d/conda.sh}"
+CONDA_SH="${CONDA_SH:?set CONDA_SH to your conda.sh path}"
 CONDA_ENVS_DIR="${CONDA_ENVS_DIR:-${HOME}/.conda/envs}"
 CONDA_NAME_EVAL="${CONDA_NAME_EVAL:-qwencomp}"
 CONDA_NAME_METRICS="${CONDA_NAME_METRICS:-medevalkit}"
@@ -69,7 +69,7 @@ elif [[ -f "${CONDA_ENVS_DIR}/${CONDA_NAME_METRICS}/lib/libstdc++.so.6" ]]; then
 else
   unset LD_PRELOAD || true
 fi
-export LD_LIBRARY_PATH="${CONDA_ENVS_DIR}/${CONDA_NAME_METRICS}/lib:/share/apps/cuda-11.8/lib64:/share/apps/cuda-12.1/lib64:${LD_LIBRARY_PATH:-}"
+export LD_LIBRARY_PATH="${CONDA_ENVS_DIR}/${CONDA_NAME_METRICS}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export REPORT_METRICS_MODEL_RESULTS_ROOT="${OUTPUT_PATH}/Qwen3-VL"
 export REPORT_METRICS_DATASETS="MIMIC_CXRfrontal"

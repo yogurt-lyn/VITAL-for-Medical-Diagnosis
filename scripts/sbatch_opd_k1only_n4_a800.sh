@@ -14,13 +14,12 @@
 #SBATCH --mem=320G
 #SBATCH --gres=gpu:a800:4
 #SBATCH --time=48:00:00
-#SBATCH --exclude=gpu8004
 
 set -euo pipefail
 
 PROJECT_ROOT="${PROJECT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 MVP_ROOT="${MVP_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/outputs}"
-CONDA_SH="${CONDA_SH:-/share/apps/miniconda3/etc/profile.d/conda.sh}"
+CONDA_SH="${CONDA_SH:?set CONDA_SH to your conda.sh path}"
 CONDA_NAME="${CONDA_NAME:-verl}"
 source "${CONDA_SH}"
 conda activate "${CONDA_NAME}"

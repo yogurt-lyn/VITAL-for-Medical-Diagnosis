@@ -21,7 +21,7 @@ unset ROCR_VISIBLE_DEVICES
 MEDEVALKIT_ROOT="${MEDEVALKIT_ROOT:-/path/to/MedEvalKit}"
 MODEL_PATH="${MODEL_PATH:?set MODEL_PATH}"
 OUTPUT_TAG="${OUTPUT_TAG:?set OUTPUT_TAG}"
-CONDA_SH="${CONDA_SH:-/share/apps/miniconda3/etc/profile.d/conda.sh}"
+CONDA_SH="${CONDA_SH:?set CONDA_SH to your conda.sh path}"
 CONDA_NAME_EVAL="${CONDA_NAME_EVAL:-qwencomp}"
 
 if [[ ! -f "${MODEL_PATH}/config.json" ]]; then
